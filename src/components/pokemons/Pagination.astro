@@ -1,0 +1,41 @@
+---
+import { Icon } from "astro-icon/components"
+
+const {url, currentPage, lastPage , class:className} = Astro.props
+---
+
+<section class=`flex gap-x-2 items-center justify-end ${className}`>
+  <a
+    href={url.prev}
+    class:list={[
+      `btn`,
+      {
+        disabled: !url.prev,
+      },
+    ]}
+  >
+    <Icon name="previous" class="size-4" />
+  </a>
+  <span class="text-base font-semibold">Página {currentPage} de {lastPage}</span>
+  <a
+    href={url.next}
+    class:list={[
+      `btn`,
+      {
+        disabled: !url.next,
+      },
+    ]}
+  >
+    <Icon name="next" class="size-4"/>
+  </a>
+  <!-- <div class="flex flex-1"></div> -->
+</section>
+
+<style>
+  .btn {
+    @apply bg-blue-500 p-1 lg:p-2 text-white rounded;
+  }
+  .disabled {
+    @apply bg-gray-600 text-gray-300;
+  }
+</style>

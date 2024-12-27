@@ -11,9 +11,9 @@ const currentPath = Astro.url.pathname;
 <!-- component -->
 <nav class="bg-white shadow dark:bg-[#ef5350] flex">
   <div
-    class="container flex items-center justify-center p-6 mx-auto text-gray-600 capitalize dark:text-gray-300"
+    class="container flex items-center justify-between md:justify-center p-4 lg:p-6 mx-auto text-gray-600 capitalize dark:text-gray-300"
   >
-    <h2 class="font-bold mx-6 text-white text-lg lg:text-4xl">Poképedia</h2>
+    <h2 class="font-extrabold mx-2 text-3xl md:mx-6 text-yellow-300  lg:text-4xl">Poképedia</h2>
     <!-- {
       links.map(({ name, href }) => (
         <a
@@ -35,15 +35,15 @@ const currentPath = Astro.url.pathname;
         <div>
           <a
             href={href}
-            class="text-gray-800 dark:text-white mx-1.5 sm:mx-6 font-semibold"
+            class="text-gray-800 dark:text-slate-100 mx-1.5 sm:mx-6 font-semibold"
           >
             {name}
           </a>
           {
             currentPath === href ? (
-              <div transition:name="menu-line" class="active mx-4" />
+              <div transition:name="menu-line" class="active lg:mx-4" />
             ):(
-              <div class="border-b-2 border-transparent mx-4" />
+              <div class="border-b-2 border-transparent lg:mx-4" />
             )
           }
           {/* <div class="border-b-2 border-blue-500 mx-4" /> */}
@@ -55,6 +55,6 @@ const currentPath = Astro.url.pathname;
 
 <style>
   .active {
-    @apply border-b-2 border-white;
+    @apply border-b-2 border-yellow-300;
   }
 </style>
