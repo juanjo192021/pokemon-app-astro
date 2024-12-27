@@ -1,0 +1,102 @@
+---
+import type { Pokemon } from "@interfaces/pokemon";
+
+interface Props {
+  name: string;
+  url: string;
+  isBig?: boolean;
+}
+
+//name
+const { name, url, isBig = false } = Astro.props;
+
+const id = url.split("/").at(-2);
+const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
+let baseExperience = 0;
+let types: string[] = [];
+
+try {
+  const response = await fetch(url);
+  const data = (await response.json()) as Pokemon;
+  baseExperience = data.base_experience;
+  types = data.types.map((type) => type.type.name);
+} catch (error) {
+  console.error("Error fetching Pokémon data:", error);
+}
+---
+
+<!-- href={`/pokemon/${id}`} -->
+<div class:list={[`bg-white/90 rounded`]}>
+  <a href={`/pokemons/${name}`}>
+    <div class="flex flex-col items-center">
+      <img
+        src={imageUrl}
+        alt={name}
+        class:list={[
+          {
+            "w-36 h-36": !isBig,
+            "w-26 h-26": isBig,
+          },
+        ]}
+        transition:name={`${name}-image`}
+      />
+    </div>
+    <div class="bg-black/85 w-full flex flex-col p-2 rounded-b">
+      <p class="capitalize">
+        <span class="font-semibold">Name:</span>
+        <span class="text-base">{name}</span>
+      </p>
+      <!-- <span
+        class:list={[
+          `capitalize font-semibold`,
+          {
+            "text-4xl text-blue-300": isBig,
+          },
+        ]}
+      >
+        {name}
+      </span> -->
+      <p class="capitalize">
+        <span class="font-semibold">Base Experience:</span>
+        <span class="text-sm">{baseExperience}</span>
+      </p>
+      <div class="my-1">
+        <p class="capitalize">
+          <span class="font-semibold">Types:</span>
+          {
+            types.map((type) => (
+              <span
+                class:list={[
+                  `p-1 me-1 rounded text-white text-xs capitalize`,
+                  {
+                    "bg-green-500": type === "grass",
+                    "bg-purple-500": type === "poison",
+                    "bg-blue-500": type === "water",
+                    "bg-yellow-400": type === "electric",
+                    "bg-red-500": type === "fire",
+                    "bg-gray-500": type === "rock",
+                    "bg-pink-400": type === "fairy",
+                    "bg-[#81B9EF]": type === "flying",
+                    "bg-[#91A119]": type === "bug",
+                    "bg-black": type === "dark",
+                    "bg-[#797979]": type === "normal",
+                    "bg-[#915121]": type === "ground",
+                    "bg-[#FF8000]": type === "fighting",
+                    "bg-[#EF4179]": type === "psychic",
+                    "bg-[#60A1B8]": type === "steel",
+                    "bg-[#3DCEF3]": type === "ice",
+                    "bg-[#5060E1]": type === "dragon",
+                  },
+                ]}
+              >
+                {type}
+              </span>
+            ))
+          }
+        </p>
+      </div>
+      <!-- Agregar preview con información adicional -->
+    </div>
+  </a>
+</div>

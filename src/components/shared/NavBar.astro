@@ -1,0 +1,60 @@
+---
+const links = [
+  { name: "Home", href: "/pokemons/1" },
+  { name: "Favorites", href: "/favorites" }
+];
+
+/* El Astro.url me facilita la información con relación a urls, path entre otros */
+const currentPath = Astro.url.pathname;
+---
+
+<!-- component -->
+<nav class="bg-white shadow dark:bg-[#ef5350] flex">
+  <div
+    class="container flex items-center justify-center p-6 mx-auto text-gray-600 capitalize dark:text-gray-300"
+  >
+    <h2 class="font-bold mx-6 text-white text-lg lg:text-4xl">Poképedia</h2>
+    <!-- {
+      links.map(({ name, href }) => (
+        <a
+          href={href}
+          class:list={[
+            `text-gray-800 dark:text-gray-200 mx-1.5 sm:mx-6`,
+            {
+              "border-b-2 border-blue-500": currentPath === href,
+            },
+          ]}
+        >
+          {name}
+        </a>
+      ))
+    } -->
+
+    {
+      links.map(({ name, href }) => (
+        <div>
+          <a
+            href={href}
+            class="text-gray-800 dark:text-white mx-1.5 sm:mx-6 font-semibold"
+          >
+            {name}
+          </a>
+          {
+            currentPath === href ? (
+              <div transition:name="menu-line" class="active mx-4" />
+            ):(
+              <div class="border-b-2 border-transparent mx-4" />
+            )
+          }
+          {/* <div class="border-b-2 border-blue-500 mx-4" /> */}
+        </div>
+      ))
+    }
+  </div>
+</nav>
+
+<style>
+  .active {
+    @apply border-b-2 border-white;
+  }
+</style>

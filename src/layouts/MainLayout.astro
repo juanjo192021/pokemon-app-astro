@@ -1,0 +1,58 @@
+---
+import NavBar from "@components/shared/NavBar.astro";
+import { ClientRouter } from "astro:transitions";
+import { siteInfo } from "src/consts/site-info";
+
+interface Props {
+  title?: string;
+  image?: string;
+  description?: string;
+}
+
+const {
+  title = siteInfo.title,
+  description = siteInfo.description,
+  image,
+} = Astro.props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+		<!-- SEO -->
+
+		<meta name="description" content={description} />
+		<meta name="author" content="Juan José Pérez Lazarte" />
+
+		<!-- OG Metatags -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={image} />
+		<meta property="og:type" content="website" />
+		<!-- <meta property="og:url" content={siteInfo.url} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content={siteInfo.twitter} />
+		<meta name="twitter:creator" content={siteInfo.twitter} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={image} /> -->
+
+		<title>{title}</title>
+    <!-- <style>
+      @view-transition {
+        navigation: auto; /* enabled! */
+      }
+    </style> -->
+    <ClientRouter />
+  </head>
+  <body class="bg-black/75 text-slate-100  flex flex-col min-h-screen">
+    <NavBar />
+    <main class="my-6 m-auto flex-grow w-full max-w-4xl px-4">
+      <slot />
+    </main>
+  </body>
+</html>
